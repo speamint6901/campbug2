@@ -15,7 +15,8 @@
         "weidner/goutte": "@dev",
         "twilio/sdk": "^5.0",
         "jenssegers/agent": "^2.4",
-        "doctrine/dbal": "^2.5"
+        "doctrine/dbal": "^2.5",
+        "tymon/jwt-auth": "dev-develop"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

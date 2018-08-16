@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'nasu@initialsite.com', 'name' => 'hammocks'],
+    'from' => ['address' => 'speamint6901@yahoo.co.jp', 'name' => 'hammocks'],
 
     /*
     |--------------------------------------------------------------------------

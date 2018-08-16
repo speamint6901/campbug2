@@ -159,6 +159,8 @@ services:
         - workspace
       networks:
         - backend
+      ports:
+        - "8000:8000"
       links:
         - docker-in-docker
 

@@ -161,6 +161,7 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Weidner\Goutte\GoutteServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class
     ],
 
     /*
@@ -213,6 +214,8 @@ return [
         'Goutte' => Weidner\Goutte\GoutteFacade::class,
         'Agent' => Jenssegers\Agent\Facades\Agent::class,
         'PaygentB2BModule' => PaygentModule\System\PaygentB2BModule::class,
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
     ],
 
 ];

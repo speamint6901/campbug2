@@ -2,19 +2,23 @@
 
 /*
 |--------------------------------------------------------------------------
-| Application Routes
+| Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
 |
 */
 
-// アプリAPI
-Route::group(array('prefix' => 'api'), function($router) {
-    Route::get('test', 'Api\TestController@showIndex');
+/*
+Route::get('/{any}', function () {
+    return view('app');
+})->where('any', '.*');
+Route::get('/', function () {
+    return view('welcome');
 });
+*/
 
 // web 非同期通信
 Route::group(array('prefix' => 'ajax', 'middleware' => 'api'), function($router) {
@@ -160,8 +164,8 @@ Route::group(array('prefix' => '/', 'middleware' => 'web'), function($router) {
         Route::post('/item/article_register', 'ArticleRegisterController@articleConfirm');
     });
     // 認証系
-    Route::get('auth/login', 'Auth\AuthController@getLogin');
-    Route::post('auth/login', 'Auth\AuthController@postLogin');
+    Route::get('auth/login', 'Auth\LoginController@showLoginForm');
+    Route::post('auth/login', 'Auth\LoginController@login');
     
     Route::get('auth/f_login', 'Auth\AuthController@facebookLogin');
     Route::get('auth/f_register', 'Auth\AuthController@facebookRegister');
@@ -176,9 +180,9 @@ Route::group(array('prefix' => '/', 'middleware' => 'web'), function($router) {
     Route::get('paygent', 'TestController@showTestPaygent');
 
     // ユーザー登録
-    Route::get('auth/register', 'Auth\AuthController@getRegister');
-    Route::post('auth/register', 'Auth\AuthController@postRegister');
-    Route::get('auth/confirm/{token}', 'Auth\AuthController@getConfirm');
+    Route::get('auth/register', 'Auth\RegisterController@showRegistrationForm');
+    Route::post('auth/register', 'Auth\RegisterController@postRegister');
+    Route::get('auth/confirm/{token}', 'Auth\RegisterController@getConfirm');
 
     // ユーザープロフィール
     Route::get('user/garage/{id}', 'UserGarageController@showIndex')
@@ -309,3 +313,7 @@ Route::group(array('prefix' => $admin_config["path_prefix"]), function($router) 
 //Route::auth();
 
 //Route::get('/home', 'HomeController@index');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

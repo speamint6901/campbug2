@@ -119,6 +119,7 @@ return [
         'name' => 'アカウント名',
         'email' => 'メールアドレス',
         'password' => 'パスワード',
+        'password_confirmation' => 'パスワード再入力',
         'brand_id' => 'ブランド',
         'item_name' => 'ギア名',
         'CategorySelect' => 'カテゴリ',
