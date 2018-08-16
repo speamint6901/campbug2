@@ -8,19 +8,18 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Auth\Access\AuthorizesResources;
 
 use App\Service\Base as Logic;
 
 class Controller extends BaseController
 {
-    use /*AuthorizesRequests, AuthorizesResources*/ DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     protected $data = [];
 
-    protected $user;
+    //protected $user;
 
-    protected $users_id = null;
+    //protected $users_id = null;
 
     protected $sns_share_path = [
         "article" => "/user/log/",
@@ -33,12 +32,18 @@ class Controller extends BaseController
         $this->setUserAgentVars($request);
 
         // 認証していれば、ユーザー情報を持ち回る
-        $user = $user = \Auth::user();
-        if (!is_null($user)) {
-            $this->user = $user;
-            $this->users_id = $user->id;
-            $this->data['user'] = $user;
-        }
+        $this->middleware(function ($request, $next) {
+            // 認証情報を取得
+            $user = \Auth::user();
+
+            // middlewareレベルでユーザー情報を持ち回る
+            if ( ! is_null($user)) {
+                view()->share('user', $user);
+                view()->share('users_id', $user->id);
+            }
+
+            return $next($request);
+        });
 
         // StorageパスURL（画像パス用の変数)
         $storage_path = \Storage::url('public');

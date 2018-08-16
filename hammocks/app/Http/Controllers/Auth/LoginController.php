@@ -67,6 +67,14 @@ class LoginController extends Controller
     public function login(Request $request) {
         $this->validateLogin($request);
 
+        $user = User::where('email', '=', $request->post('email'))->first();
+        if ($user) {
+            if(! $user->isConfirmed()) {
+                \Session::flash('flash_message', 'ユーザー登録確認メールに従って、ユーザーを有効化してください。');
+                return redirect()->back()->withInput($request->only('email'));
+            }
+        }
+
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
         // the IP address of the client making these requests into this application.
@@ -80,13 +88,7 @@ class LoginController extends Controller
             return $this->sendLoginResponse($request);
         }
 
-        $user = User::where('email', '=', $request->post('email'))->first();
-        if ($user) {
-            if(! $user->isConfirmed()) {
-                \Session::flash('flash_message', 'ユーザー登録確認メールに従って、ユーザーを有効化してください。');
-                return redirect()->back()->withInput($request->only('email'));
-            }
-        }
+        $this->incrementLoginAttempts($request);
 
         return $this->sendFailedLoginResponse($request);
     }
