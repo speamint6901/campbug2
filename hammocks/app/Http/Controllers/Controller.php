@@ -19,7 +19,7 @@ class Controller extends BaseController
 
     //protected $user;
 
-    //protected $users_id = null;
+    protected $users_id = null;
 
     protected $sns_share_path = [
         "article" => "/user/log/",
@@ -40,6 +40,7 @@ class Controller extends BaseController
             if ( ! is_null($user)) {
                 view()->share('user', $user);
                 view()->share('users_id', $user->id);
+                $this->users_id = $user->id;
             }
 
             return $next($request);
@@ -108,13 +109,13 @@ class Controller extends BaseController
     }
 
     // 画像保存のキャッシュクリア
-    public function clearImageUploaderCache($id, $cache_key_prefix) {
-        Logic::clearImageUploaderCache($id, $this->users_id, $cache_key_prefix);
+    public function clearImageUploaderCache($cache_key_prefix) {
+        Logic::clearImageUploaderCache($this->users_id, $cache_key_prefix);
     }
 
     // 画像キャッシュ取得
-    public function getImageUploaderCache($id, $cache_key_prefix) {
-        return Logic::getImageUploaderCache($id, $this->users_id, $cache_key_prefix);
+    public function getImageUploaderCache($cache_key_prefix) {
+        return Logic::getImageUploaderCache($this->users_id, $cache_key_prefix);
     }
 
     // snsシェアリンクコンフィグ取得

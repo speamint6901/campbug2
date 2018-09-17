@@ -1,0 +1,13 @@
+export const SET_BRAND_LIST = 'SET_BRAND_LIST';
+export const SET_BRAND_NAME = 'SET_BRAND_NAME';
+export const SET_BRAND_ID = 'SET_BRAND_ID';
+export const SET_ITEM_NAME = 'SET_ITEM_NAME';
+export const SET_BIG_CATEGORY = 'SET_BIG_CATEGORY';
+export const SET_CATEGORY = 'SET_CATEGORY';
+export const SET_GENRE = 'SET_GENRE';
+export const SET_SECOND_GENRE = 'SET_SECOND_GENRE';
+export const SET_DESCRIPTION = 'SET_DESCRIPTION';
+export const SET_IMAGE_URL = 'SET_IMAGE_URL';
+export const SET_HAVE_WANT = 'SET_HAVE_WANT';
+export const CHECK_FORM = 'CHECK_FORM';
+export const SET_MIME_TYPE = 'SET_MIME_TYPE';

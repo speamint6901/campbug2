@@ -143,7 +143,6 @@ Route::group(array('prefix' => '/', 'middleware' => 'web'), function($router) {
         Route::get('user/watching', 'UserGarageController@showWatching');
         // アイテム登録
         Route::get('/item/register', 'ItemRegisterController@showStepOne');
-        Route::get('/item/register/1', 'ItemRegisterController@showStepOne');
         Route::post('/item/register/2', 'ItemRegisterController@showStepTwo');
         Route::get('/item/register/2', 'ItemRegisterController@showStepTwoGet');
         Route::post('/item/register/confirm', 'ItemRegisterController@showItemConfirm');

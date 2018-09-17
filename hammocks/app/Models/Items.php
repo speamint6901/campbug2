@@ -286,12 +286,12 @@ class Items extends Base
     * @return void
     */
     public function saveItems($input, $file_info, $users_id) {
-        $this->category_id = $input['GenreSelect'];
-        $this->genre_id = !empty($input['Sub_GenreSelect']) ? $input['Sub_GenreSelect'] : null;
-        $this->genre_second_id = !empty($input['Sub-sub_GenreSelect']) ? $input['Sub-sub_GenreSelect'] : null;
-        $this->brands_id = $input['brand_id'];
-        $this->name = $input['item_name'];
-        $this->description = $input['item_description'];
+        $this->category_id = $input['selectCategory'];
+        $this->genre_id = !empty($input['selectGenre']) ? $input['selectGenre'] : null;
+        $this->genre_second_id = !empty($input['selectSecondGenre']) ? $input['selectSecondGenre'] : null;
+        $this->brands_id = $input['brandId'];
+        $this->name = $input['itemName'];
+        $this->description = $input['description'];
         // TODO テスト用に常時アクティブ
 	    $this->status = 1;
         $this->create_users_id = $users_id;
@@ -299,9 +299,6 @@ class Items extends Base
         $group_dir = self::getGroupDir($this->id);
         $finish_path = self::makeGroupDir($file_info['path'], $group_dir);
         $this->img_url = $finish_path . $this->id . $file_info['ext'];
-        if (isset($input['site_img_url']) && ! empty($input['site_img_url'])) {
-            $this->img_site_url = $input['site_img_url'];
-        }
         $this->save();
         return $this;
     }

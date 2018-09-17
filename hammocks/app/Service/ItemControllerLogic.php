@@ -124,8 +124,6 @@ class ItemControllerLogic extends Base {
         } else {
             self::putImageBase64ToBlob($input['pict-data-url'], $input['pict-mimetype'], $items->img_url);
         }
-        // solr登録
-        self::putSolrItems($items);
 
         return $items;
     }
@@ -141,15 +139,12 @@ class ItemControllerLogic extends Base {
     */
     public static function saveUserItem($input, $users_id, $items_id, $file_info) {
         $user_items = new UserItems();
-        $user_items->saveItems($input, $users_id, $items_id, $file_info['user']);
+        $user_items->saveItems($input, $users_id, $items_id, $file_info);
 
         // 画像保存(ユーザーアイテム）
-        if (isset($input['pict-data-url']) && ! empty($input['pict-data-url'])) {
-            self::putImageBase64ToBlob($input['pict-data-url'], $input['pict-mimetype'], $user_items->img_url);
+        if (isset($input['dataUrl']) && ! empty($input['dataUrl'])) {
+            self::putImageBase64ToBlob($input['dataUrl'], $input['mimeType'], $user_items->img_url);
         }
-
-        // solr登録
-        //self::putSolrUserItems($user_items);
 
         return $user_items;
     }

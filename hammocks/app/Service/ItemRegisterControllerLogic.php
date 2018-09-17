@@ -24,6 +24,13 @@ class ItemRegisterControllerLogic extends ItemControllerLogic {
     }
 
     /**
+    * ブランド全取得
+    */
+    public static function brandSelectBox() {
+        return \App\Models\Brands::all();
+    }
+
+    /**
     * 出品重複チェック
     *
     * @params  $items_id  int アイテムID
@@ -77,17 +84,16 @@ class ItemRegisterControllerLogic extends ItemControllerLogic {
         $file_info = self::createFileInfo($input);
         // アイテムデータ保存(user_items, items)
         // itemのidが無ければ、public itemに新規登録する
-        $items_id = $input['item_id'];
-        if (empty($items_id)) {
-            $items = self::savePublicItem($input, $file_info['public'], $users_id);
-        }
+        $items = self::savePublicItem($input, $file_info['public'], $users_id);
+
+        $user_items = self::saveUserItem($input, $users_id, $items->id, $file_info['user']);
 
         // 各種カウント更新
         self::incrementHasCounts($items);
 
         // have wantの更新
-        if (isset($input['have_want']) && ! empty($input['have_want'])) {
-            self::saveHaveWantParams($items, $users_id, $input['have_want']);
+        if (isset($input['haveWant']) && ! empty($input['haveWant'])) {
+            self::saveHaveWantParams($items, $users_id, $input['haveWant']);
         }
 
         return $items;

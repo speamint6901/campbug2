@@ -114,14 +114,14 @@ class Base {
     }
 
     // 画像保存のキャッシュクリア
-    public static function clearImageUploaderCache($id, $users_id, $cache_key_prefix) {
-        $key = $cache_key_prefix . "_" . $id . "_" . $users_id;
+    public static function clearImageUploaderCache($users_id, $cache_key_prefix) {
+        $key = $cache_key_prefix . "_" . $users_id;
         \Cache::forget($key);
     }
 
     // 画像キャッシュ取得
-    public static function getImageUploaderCache($id, $users_id, $cache_key_prefix) {
-        $key = $cache_key_prefix . "_" . $id . "_" . $users_id;
+    public static function getImageUploaderCache($users_id, $cache_key_prefix) {
+        $key = $cache_key_prefix . "_" . $users_id;
         return \Cache::get($key, null);
     }
 }
