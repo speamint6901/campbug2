@@ -7,5 +7,3 @@ docker-compose exec workspace php artisan cache:clear
 docker-compose exec workspace php artisan config:cache
 docker-compose exec workspace php artisan route:cache
 docker-compose exec workspace php artisan view:clear
-cd ../hammocks
-npm run dev

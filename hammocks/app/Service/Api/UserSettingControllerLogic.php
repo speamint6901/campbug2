@@ -49,7 +49,7 @@ class UserSettingControllerLogic extends \App\Service\UserControllerLogic {
         // 画像をストレージに保存
         self::putImageBase64ToBlob($image['data_url'], $image['mime_type'], $img_url);
         // 完了したらcache削除
-        self::clearImageUploaderCache(1, $users_id, $image["cache_key"]);
+        self::clearImageUploaderCache($users_id, $image["cache_key"]);
         return $users;
     }
 
@@ -78,7 +78,7 @@ class UserSettingControllerLogic extends \App\Service\UserControllerLogic {
         $users->is_certificate_auth = UserSecretProfile::CERTIFICATE_STATUS_UPLOAD;
         $users->save();
         // 完了したらcache削除
-        self::clearImageUploaderCache(1, $users_id, $image["cache_key"]);
+        self::clearImageUploaderCache($users_id, $image["cache_key"]);
         return $users;
     }
 
