@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Http\Requests\ImageRegisterRequest;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ItemRegisterPostRequest;
 use App\Http\Controllers\ItemController;
@@ -27,89 +28,27 @@ class ItemRegisterController extends ItemController
         ]);
     }
 
-    // step2のバリデーションルール
-    protected function stepTwoValidator(array $data)
-    {
-        return Validator::make($data, [
-            'brand_id' => 'required|integer',
-            'item_name' => 'required|max:64',
-            'CategorySelect' => 'required|integer',
-            'GenreSelect' => 'required|integer',
-            'item_description' => 'max:2000',
-        ]);
-    }
-
     // ステップアップ登録ページ　１ページ目
     public function showStepOne(Request $request) {
 
-        $this->data['params'] = $request->session()->get('step_one');
-        $this->data['other_brand_id'] = Logic::getOtherBrandId();
-        return \View::make('item.register1', $this->data);
-    }
+         // 画像キャッシュクリア
+        $this->clearImageUploaderCache("item");
 
-    public function showStepTwo(Request $request) {
-         // キャッシュクリア
-        $this->clearImageUploaderCache(1, "item");
-        $params = $request->input();
-        $validator = $this->stepOneValidator($request->all());
-        if ($validator->fails()) {
-            $this->throwValidationException(
-                $request, $validator
-            );
-        }
-
-        $category = \Config::get('category.select');
         $this->data['big_category'] = \Config::get('category.select');
 
-        $this->data['brand'] = Logic::getBrand($params['brand_id']);
-
         $this->data['params'] = [];
-        $this->data['params']['item_name'] = $params['item_name'];
-        $request->session()->put('step_one_next_flag', 1);
-        return \View::make('item.register2', $this->data);
-    }
-
-    // step2 getメソッドアクセス(バリデーションで引っかかった時のみアクセス許可)
-    public function showStepTwoGet(Request $request) {
-        // 直リンク対策１
-        if (is_null($request->session()->get("step_one_next_flag", null))) {
-            return redirect("item/register/1");
-        }
-         // キャッシュクリア
-        $this->clearImageUploaderCache(1, "item");
-
-        $category = \Config::get('category.select');
-        $this->data['big_category'] = \Config::get('category.select');
-
-        // バリデーションセッションからの受け取り
-        $brand_id = old("brand_id");
-        // 直リンク対策２
-        if (is_null($brand_id)) {
-            return redirect("item/register/1");
-        }
-        $this->data['brand'] = Logic::getBrand($brand_id);
-
-        $this->data['params'] = [];
-        $this->data['params']['item_name'] = old("item_name");;
-
         return \View::make('item.register2', $this->data);
     }
 
     // アイテム登録処理
-    public function showItemConfirm(Request $request) {
+    public function showItemConfirm(ImageRegisterRequest $request) {
         $post = $request->input();
         if (empty($post)) {
-             return Redirect::to('/item/register/2')->send();
-        }
-        $validator = $this->stepTwoValidator($request->all());
-        if ($validator->fails()) {
-            $this->throwValidationException(
-                $request, $validator
-            );
+             return Redirect::to('/item/register')->send();
         }
 
         // キャッシュから画像情報を取得
-        $cache_key = "item_1_" . $this->users_id;
+        $cache_key = "item_" . $this->users_id;
         $img_cache = \Cache::get($cache_key, null); 
         if ( ! is_null($img_cache) && ! empty($img_cache)) {
             $post["pict-data-url"] = $img_cache[0]["data_url"];
@@ -118,8 +57,7 @@ class ItemRegisterController extends ItemController
 
         // アイテム登録
         Logic::register($this->users_id, $post);
-        self::clearImageUploaderCache(1, $cache_key);
-        $request->session()->forget('step_one_next_flag');
+        self::clearImageUploaderCache($cache_key);
         return redirect("item/register/complete");
     }
 
@@ -141,7 +79,7 @@ class ItemRegisterController extends ItemController
         Logic::checkSaleItemDeplicate($this->users_id, $id);
 
         // アクセス時にアップロード済みの画像をキャッシュから削除
-        $this->clearImageUploaderCache($id, "sale_item");
+        $this->clearImageUploaderCache("sale_item");
 
         // アップロードタイプ設定
         $this->data['upload_type'] = "sale_item";
@@ -289,7 +227,7 @@ class ItemRegisterController extends ItemController
 
         if ( ! is_null($user_items) && ! empty($user_items)) {
             // キャッシュに保存している画像データを削除
-            self::clearImageUploaderCache($post['items_id'], $image_cache_key);
+            self::clearImageUploaderCache($image_cache_key);
             $request->session()->forget('post_step1');
             $request->session()->forget('post_step2');
             $request->session()->forget('post_step3');

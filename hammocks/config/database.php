@@ -73,7 +73,7 @@ return [
         ],
         'slave2' => [
             'driver' => 'mysql',
-            'host' => env('DB_SLAVE2_HOST', 'localhost'),
+            'host' => env('DB_SLAVE1_HOST', 'localhost'),
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'forge'),
             'username' => env('DB_USERNAME', 'forge'),

@@ -560,23 +560,14 @@ class Items extends \App\Models\Base
         $this->users_id = $users_id;
         $this->items_id = $items_id;
         $this->user_container_id = (!empty($input['ContainerSelect'])) ?? null;
-        if (isset($input['item_description'])) {
-            $this->description = $input['item_description'];
-        }
-        // セールアイテム出品時の分岐
-        if (isset($input['price'])) {
-            $this->price = $input['price'];
-            $this->is_store = 1;
-            $this->item_condition = $input['item_condition'];
+        if (isset($input['description'])) {
+            $this->description = $input['description'];
         }
         $this->save();
         if ( ! is_null($file_info)) {
             $group_dir = self::getGroupDir($this->id);
             $finish_path = self::makeGroupDir($file_info['path'], $group_dir);
             $this->img_url = $finish_path . $this->id . $file_info['ext'];
-            if (isset($input['site_img_url']) && ! empty($input['site_img_url'])) {
-                $this->img_site_url = $input['site_img_url'];
-            }
         }
         $this->save();
         return $this;

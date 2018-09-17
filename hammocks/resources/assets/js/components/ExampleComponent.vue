@@ -7,17 +7,19 @@
 
                     <div class="card-body">
                         I'm an example component.
+                        {{msg}}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
-
 <script>
     export default {
-        mounted() {
-            console.log('Component mounted.')
+        data: function() {
+            return {
+                msg : "test vue"
+            }
         }
-    }
+	}
 </script>
