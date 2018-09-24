@@ -13,6 +13,11 @@ use App\Service\ItemRegisterControllerLogic as Logic;
 class ItemRegisterController extends Controller
 {
 
+    public function __construct(Request $request) {
+        parent::__construct($request);
+        $this->middleware('auth');
+    }
+
     // アイテム登録処理
     public function showItemConfirm(ImageRegisterRequest $request) {
         $post = $request->input();
@@ -28,6 +33,5 @@ class ItemRegisterController extends Controller
         // アイテム登録
         Logic::register($this->users_id, $post);
         self::clearImageUploaderCache($cache_key);
-        return redirect("item/register/complete");
     }
 }
