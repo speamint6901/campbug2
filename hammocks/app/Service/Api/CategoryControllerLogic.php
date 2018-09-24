@@ -11,6 +11,43 @@ use App\Models\GenreSecond;
 class CategoryControllerLogic extends \App\Service\Base {
 
     /**
+    * 全取得
+    **/
+    public static function categorySelectBox() {
+        return Category::all();
+    }
+
+    /**
+    * categoryをbig_category_idで取得
+    */
+    public static function getCategoryByBigCategoryId($id) {
+        if ( is_null($id)) {
+            throw new ItemRegisterException();
+        }
+        return Category::where("big_category_id", $id)->get();
+    }
+
+    /**
+    * genreをcategory_idで取得
+    */
+    public static function getGenresByCategoryId($id) {
+        if ( is_null($id)) {
+            throw new ItemRegisterException();
+        }
+        return Genre::where("category_id", $id)->get();
+    }
+
+    /**
+    * genreをcategory_idで取得
+    */
+    public static function getSecondGenresByCategoryId($id) {
+        if ( is_null($id)) {
+            throw new ItemRegisterException();
+        }
+        return GenreSecond::where("genre_id", $id)->get();
+    }
+
+    /**
     * カテゴリとジャンルリストを大カテゴリIDで取得して配列でパースして返す
     *
     * @params $big_category_id  int  大カテゴリID

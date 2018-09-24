@@ -45,12 +45,12 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => "/var/www/html/storage/app/public/",
+            'root' => "/var/www/storage/app/public/",
         ],
 
         'public' => [
             'driver' => 'local',
-            'root' => "/var/www/html/storage/app/public/",
+            'root' => "/var/www/storage/app/public/",
             'visibility' => 'public',
         ],
 

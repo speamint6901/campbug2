@@ -18,14 +18,14 @@ class UserSettingController extends BaseApiController
     // アバター、背景画像更新
     public function updateUserImage(Request $request) {
         $type = $request->input("type");
-        $image = $this->getImageUploaderCache(1, $type);
+        $image = $this->getImageUploaderCache($type);
         Logic::updateUserImages($this->users_id, $image);
     }
 
     // 本人確認書類アップロード
     public function updateIdentificationImage(Request $request) {
         $type = $request->input("type");
-        $image = $this->getImageUploaderCache(1, $type);
+        $image = $this->getImageUploaderCache($type);
         Logic::updateIdentificationImages($this->users_id, $image);
     }
 

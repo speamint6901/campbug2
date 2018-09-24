@@ -7,21 +7,16 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Auth\Access\AuthorizesResources;
 
-class BaseApiController extends Controller
+class BaseApiController extends BaseController
 {
-    use AuthorizesRequests, AuthorizesResources, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     const USER_LIST_LIMIT = 10; // ユーザーリストの総表示数
 
     protected $params = [];
 
     protected $result_offset = 0;
-
-    public function __construct(Request $request) {
-        parent::__construct($request);
-    }
 
     // API認証チェック
     protected function authCheck() {

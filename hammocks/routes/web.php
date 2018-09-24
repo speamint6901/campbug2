@@ -139,11 +139,10 @@ Route::group(array('prefix' => '/', 'middleware' => 'web'), function($router) {
         // 売り上げ管理
         Route::get('user/setting/sales', 'UserSettingController@showSales');
         // ろぐあうと
-        Route::get('auth/logout', 'Auth\AuthController@getLogout');
+        Route::get('auth/logout', 'Auth\LoginController@logout');
         Route::get('user/watching', 'UserGarageController@showWatching');
         // アイテム登録
         Route::get('/item/register', 'ItemRegisterController@showStepOne');
-        Route::get('/item/register/1', 'ItemRegisterController@showStepOne');
         Route::post('/item/register/2', 'ItemRegisterController@showStepTwo');
         Route::get('/item/register/2', 'ItemRegisterController@showStepTwoGet');
         Route::post('/item/register/confirm', 'ItemRegisterController@showItemConfirm');

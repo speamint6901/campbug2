@@ -39,8 +39,9 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\UserMiddleware::class,
         ],
         'api' => [
+            \App\Http\Middleware\EncryptCookies::class,
+            \Illuminate\Session\Middleware\StartSession::class,
             'throttle:60,1',
-            \App\Http\Middleware\ParamsMiddleware::class,
         ],
     ];
 
