@@ -14,7 +14,7 @@ export const ItemsRegisterAPI = {
    },
    itemRegister(data) {
         axios.post(API_URI + '/api/item/register/doRegister', data).then((response) => {
-            document.location = API_URI + "/item/register"
+            document.location = API_URI + "/item/register/complete"
         })
         .catch((error) => {
             console.log(error);
