@@ -24,4 +24,8 @@ hammocks/.DS_Store
 hammocks/post_build
 
 
+//gulp files
+package-lock.json
+package.json
+node_modules
 gulpfile.js
