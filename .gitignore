@@ -22,3 +22,6 @@ hammocks/.project
 hammocks/.settings
 hammocks/.DS_Store
 hammocks/post_build
+
+
+gulpfile.js
