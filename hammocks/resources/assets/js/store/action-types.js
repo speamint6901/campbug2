@@ -1,0 +1,2 @@
+export const GET_BRAND_LIST = 'GET_BRAND_LIST';
+export const ITEM_REGISTER = 'ITEM_REGISTER';

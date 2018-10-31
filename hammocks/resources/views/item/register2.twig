@@ -1,0 +1,40 @@
+{% extends "templates/common/register_base.twig" %}
+
+ {% block stylesheets %}
+{% endblock stylesheets %}
+ {% block top_js %}{% endblock top_js %}
+
+
+ {% block contents %}
+<h2>ギア情報入力</h2>
+ <div class="formcontents">
+  <form method="post" id="item-register-form">
+
+<div id="brand-regist">
+</div>
+
+
+  </form>
+ </div><!--//formcontents-->
+
+ {% embed "partial/common/modal/modal-pict_select_url.twig" %}
+ {# {% block ModalContents %} {% endblock ModalContents %} #}
+ {% endembed %}
+
+ {% endblock contents %}
+
+
+ {% block bottom_js %}
+ <script src="{{ asset('js/vendor/remodal.min.js') }}" ></script>
+
+<script>
+ window.addEventListener("beforeunload", function (e) {
+  var confirmationMessage = "入力内容を破棄します。";
+  e.returnValue = confirmationMessage;
+  return confirmationMessage;
+ });
+</script>
+
+
+{% endblock bottom_js %}
+
