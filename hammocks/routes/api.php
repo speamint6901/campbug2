@@ -29,3 +29,4 @@ Route::get('second-genres/{id}', 'Api\CategoryController@getSelectBoxSecondGenre
             ->where(['id' => '[0-9]+']);
 Route::post('uploader', 'Api\UploadController@tmpUpload');
 Route::post('item/register/doRegister', 'Api\ItemRegisterController@showItemConfirm');
+Route::get('public_item_list', 'Api\PublicItemController@getItemList');

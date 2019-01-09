@@ -31,7 +31,10 @@ class PublicItemController extends \App\Http\Controllers\ItemController
         }
             
         $items = Logic::getItemList($params, $owner_users_id)->paginate(self::COMMENT_LIST_PER_PAGE);
-        $items = Logic::setPriceAndSaleCount($items);
+        $items = $items->map(function($item, $key) {
+            $item->public_img =  \Storage::url($item->public_img);
+            return $item;
+        });
         return new JsonResponse($items);
     }
 
