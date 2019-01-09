@@ -1,0 +1,63 @@
+//******************************* Decorate /
+//==================== FontAwsomeを使ったアイコン表示（前付け）
+@mixin fa-icon($fa-content: "\f08a", $f-size:14, $l-size:28, $fa-color:$text-color, $fa-pd-r :20px) {
+ &:before{
+  content:$fa-content;
+  font-family:"FontAwesome";
+  @include fontsize($f-size);
+  @include lineheight($l-size);
+  color:$fa-color;
+  padding-right: $fa-pd-r;
+ }
+} //ex. @include fa-icon("\F095", 14, 18, $base-color, 10px);
+
+//==================== FontAwsomeを使ったアイコン表示（後付け）
+@mixin fa-icon-af($fa-content: "\f08a", $f-size:14, $l-size:28, $fa-color:$text-color, $fa-pd-r :20px) {
+ &:after{
+  content:$fa-content;
+  font-family:"FontAwesome";
+  @include fontsize($f-size);
+  @include lineheight($l-size);
+  color:$fa-color;
+  padding-right: $fa-pd-r;
+  right: 0;
+  position: absolute;
+ }
+} //ex. @include fa-icon-af("\F095", 14, 18, $base-color, 10px);
+
+
+//==================== ボックスシャドウ
+@mixin box-shadow( $h: 10px , $v: 10px , $b: 0px , $s: 0px , $c: #000000 ) {
+ -webkit-box-shadow: $h $v $b $s $c;
+ -moz-box-shadow: $h $v $b $s $c;
+ box-shadow: $h $v $b $s $c;
+}
+//ex. @include box-shadow(8px, 8px);
+
+//==================== 三角マーク
+@mixin module-triangle($size: 16px, $color: #000, $side: top, $position: 50%, $direction: regular) {
+ &:before {
+  content: "";
+  display: inline-block;
+  border: $size solid transparent;
+  border-left-color: $color;
+  position: absolute;
+  left: -33px;
+  //top: 50%;
+  bottom:4px;
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+ }
+ &:after {
+  content: "";
+  display: inline-block;
+  border: $size solid transparent;
+  border-left-color: $color;
+  position: absolute;
+  left: -32px;
+  //top: 50%;
+  bottom:4px;
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+ }
+}

@@ -1,0 +1,43 @@
+//******************************* Font /
+@mixin fontsize($size: 10) {
+ font-size: $size + px;
+ font-size: ($size / 10) * 1rem;
+}
+//ex. @include fontsize(12);
+
+@mixin lineheight($lheight: 10) {
+ line-height: $lheight + px;
+ line-height: ($lheight / 10) * 1rem;
+}
+//ex. @include lineheight(12);
+
+
+@mixin txt-01{@include fontsize(10); @include lineheight(14);}
+@mixin txt-02{@include fontsize(12); @include lineheight(16);}
+@mixin txt-03{@include fontsize(14); @include lineheight(18);}
+@mixin txt-04{@include fontsize(20); @include lineheight(24);}
+@mixin txt-05{@include fontsize(14); @include lineheight(22);}
+
+
+//==================== 複数行の時に高さ固定して三点省略表示するやつ
+@mixin multiple-ellipsis($ct-height:80px,$num-line:4,$ct-color:#FFF){
+ position: relative;
+ height: $ct-height;
+ overflow: hidden;
+ line-height: ($ct-height / $num-line);
+ &::before, &::after {
+  position: absolute;
+  background: $ct-color;
+ }
+ &::before {
+  content: "･･･";
+  bottom: 0;
+  right: 0;
+  padding: 0 1px;
+ }
+ &::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+ }
+}//ex. @include multiple-ellipsis(80px,4,$main-color);

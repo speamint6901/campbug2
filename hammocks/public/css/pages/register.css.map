@@ -1,7 +1,1 @@
-{
-"version": 3,
-"mappings": "AAYC,mBAAa;EACZ,MAAM,EAAE,SAAS",
-"sources": ["file:///Users/IS_Dev.suganuma/vagrant_server/project/hammocks/project/hammocks/resources/assets/sass/pages/register.scss"],
-"names": [],
-"file": "register.css"
-}
+{"version":3,"sources":["register.scss"],"names":[],"mappings":"AAMA;EAGE,kBAAiB,EACjB","file":"register.css","sourcesContent":["@import \"impoprt_setting\";\n\n//******************************* impoprt partial /\n\n\n\n.auth {\n\n .intermission{\n  margin: 25px auto;\n }\n\n\n\n //breakpoints -------------------------------\n @include MQ(maxL) { }//breakpoints (maxL) -------------------------\n\n @include MQ(M) { }//breakpoints (M) -------------------------\n\n @include MQ(S) { }//breakpoints (S) -------------------------\n\n} //auth\n\n\n\n.mobile { //mobile setting **********************\n\n\n //Gyro setting --------------------------------\n @media screen and (orientation: portrait) { }//portrait\n @media screen and (orientation: landscape) { }//landscape\n //end Gyro setting ----------------------------\n\n\n} //mobile end **********************************\n\n.tablet { //tablet setting **********************\n\n\n //Gyro setting --------------------------------\n @media screen and (orientation: portrait) { } //portrait\n @media screen and (orientation: landscape) { }//landscape\n //end Gyro setting ----------------------------\n\n\n} //tablet end **********************************\n"]}
