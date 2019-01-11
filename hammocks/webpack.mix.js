@@ -13,4 +13,5 @@ let mix = require('laravel-mix');
 
 mix
    .js('resources/assets/js/itemRegist.js', 'public/js')
+   .js('resources/assets/js/list.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');
