@@ -1,0 +1,234 @@
+//==================== グラデ上下に明→暗
+@mixin gradient-top-lighten($color:$main-color, $lighten:10){
+ background-color: $color;
+ @include filter-gradient(lighten($color, $lighten), $color, vertical);//IE
+ @include background-image(linear-gradient(lighten($color, $lighten) 0%, $color 100%));
+}
+
+//==================== グラデ上下に暗→明
+@mixin gradient-top-darken($color:$main-color, $darken:10){
+ background-color: $color;
+ @include filter-gradient(lighten($color, $darken), $color, vertical);//IE
+ @include background-image(linear-gradient(darken($color, $darken) 0%, $color 100%));
+}
+
+//==================== グラデ　線形（水平・垂直）と円形
+@mixin gradient($start-color, $end-color, $orientation)
+{
+ background: $start-color;
+ @if $orientation == vertical
+ {
+  // vertical
+  background: -moz-linear-gradient(top,  $start-color 0%, $end-color 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$start-color), color-stop(100%,$end-color));
+  background: -webkit-linear-gradient(top,  $start-color 0%,$end-color 100%);
+  background: -o-linear-gradient(top,  $start-color 0%,$end-color 100%);
+  background: -ms-linear-gradient(top,  $start-color 0%,$end-color 100%);
+  background: linear-gradient(to bottom,  $start-color 0%,$end-color 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$start-color', endColorstr='$end-color',GradientType=0 );
+ }
+ @else if $orientation == horizontal
+ {
+  // horizontal
+  background: -moz-linear-gradient(left,  $start-color 0%, $end-color 100%);
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,$start-color), color-stop(100%,$end-color));
+  background: -webkit-linear-gradient(left,  $start-color 0%,$end-color 100%);
+  background: -o-linear-gradient(left,  $start-color 0%,$end-color 100%);
+  background: -ms-linear-gradient(left,  $start-color 0%,$end-color 100%);
+  background: linear-gradient(to right,  $start-color 0%,$end-color 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$start-color', endColorstr='$end-color',GradientType=1 );
+ }
+ @else
+ {
+  // radial
+  background: -moz-radial-gradient(center, ellipse cover,  $start-color 0%, $end-color 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,$start-color), color-stop(100%,$end-color));
+  background: -webkit-radial-gradient(center, ellipse cover,  $start-color 0%,$end-color 100%);
+  background: -o-radial-gradient(center, ellipse cover,  $start-color 0%,$end-color 100%);
+  background: -ms-radial-gradient(center, ellipse cover,  $start-color 0%,$end-color 100%);
+  background: radial-gradient(ellipse at center,  $start-color 0%,$end-color 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$start-color', endColorstr='$end-color',GradientType=1 );
+ }
+}
+//ex.@include gradient(#ff00ff, #ff00cc, vertical);
+
+//==================== グラデ
+@mixin linear-gradient($direction, $color-stops...) {
+ background: nth(nth($color-stops, 1), 1);
+ background: -webkit-linear-gradient(legacy-direction($direction), $color-stops);
+ background: linear-gradient($direction, $color-stops);
+}
+//@include linear-gradient(hotpink, tomato);
+
+//==================== 斜線パターン
+@mixin diagonal($stripe-color1, $stripe-color2, $stripe-size) {
+ background:  -webkit-gradient(
+  linear, left top, right bottom,
+  from ($stripe-color1),
+  color-stop(0.25, $stripe-color1),
+  color-stop(0.25, $stripe-color2),
+  color-stop(0.5, $stripe-color2),
+  color-stop(0.5, $stripe-color1),
+  color-stop(0.75, $stripe-color1),
+  color-stop(0.75, $stripe-color2),
+  to($stripe-color2)
+ );
+ background: -moz-linear-gradient(
+  -45deg,
+  $stripe-color1 25%,
+  $stripe-color2 25%,
+  $stripe-color2 50%,
+  $stripe-color1 50%,
+  $stripe-color1 75%,
+  $stripe-color2 75%,
+  $stripe-color2
+ );
+ background: linear-gradient(
+  -45deg,
+  $stripe-color1 25%,
+  $stripe-color2 25%,
+  $stripe-color2 50%,
+  $stripe-color1 50%,
+  $stripe-color1 75%,
+  $stripe-color2 75%,
+  $stripe-color2
+ );
+
+ background-size: $stripe-size $stripe-size;
+}
+//ex.@include diagonal(#ddd, #fff, 2px);
+
+//==================== グラデ super-gradient
+@function contains($colors,$var) {
+ $contains: false;
+ @each $item in $colors { @if $item == $var { $contains: true; } }
+ @return $contains;
+}
+
+@function orientation-string($type, $from, $w3c:false) {
+ $string: '';
+
+ @if $w3c {
+
+  @if $type == 'linear' {
+   @if $from == 'top' or $from == 'bottom' { $string: 'to bottom, '; }
+   @else if $from == 'left' or $from == 'right' { $string: 'to right, '; }
+   @else if $from == (left top) or $from == (top left) or $from == (right bottom) or $from == (bottom right) { $string: '135deg, '; }
+   @else { $string: '45deg, '; }
+
+  } @else if $type == 'radial' { $string: 'ellipse at ' + $from + ', '; }
+
+ } @else { // new webkit, moz, ms, o
+
+  @if $type == 'linear' {
+   @if $from == 'top' or $from == 'bottom' { $string: 'top, '; }
+   @else if $from == 'left' or $from == 'right' { $string: 'left, '; }
+   @else if $from == (left top) or $from == (top left) or $from == (right bottom) or $from == (bottom right) { $string: '-45deg, '; }
+   @else { $string: '45deg, '; }
+
+  } @else if $type == 'radial' { $string: $from + ', ellipse cover, '; }
+
+ }
+
+ @return $string;
+}
+
+@function color-substring($colors) {
+ $i: 1;
+ $substring: '';
+ $string: '';
+
+ @while $i < length($colors) {
+
+  $substring: nth($colors, $i) + ' ' + nth($colors, $i+1);
+  $string: $string + $substring;
+  $i: $i + 1;
+
+ }
+
+ @return $string;
+}
+
+@function color-string($colors) {
+ $i: 1;
+ $spacer: ', ';
+ $substring: '';
+ $string: '';
+
+ @while $i <= length($colors) {
+  @if $i == length($colors) { $spacer: ''; }
+
+  $substring: color-substring(nth($colors, $i)) + $spacer;
+  $string: $string + $substring;
+  $i: $i + 1;
+
+ }
+
+ @return $string;
+}
+
+@function ie-gradient-type($direction) {
+ @if $first-color { @return nth(nth($colors, 1), 1) }
+ @else { @return nth(nth($colors, length($colors)), 1) }
+}
+
+@function ie-colors($colors, $first-color:true) {
+ @if $first-color { @return nth(nth($colors, 1), 1) }
+ @else { @return nth(nth($colors, length($colors)), 1) }
+}
+
+@mixin sgradient($type:'linear', $from:'top', $colors:((rgba(42,179,221,1), 0%),(rgba(183,80,80,1), 100%))) {
+
+ $orientation-string: orientation-string($type, $from);
+ $orientation-string-w3c: orientation-string($type, $from, $w3c:true);
+
+ $color-string: #{color-string($colors)};
+
+ $css-string: gradient(#{$orientation-string}#{$color-string});
+ $css-string-w3c: gradient(#{$orientation-string-w3c}#{$color-string});
+
+ $ie-gradient-type: 0;
+ @if $type != 'vertical' { $ie-gradient-type: 1 }
+
+ background-color: #{ie-colors($colors, false)};
+ background: -webkit-#{$type}-#{$css-string};
+background:    -moz-#{$type}-#{$css-string};
+background:     -ms-#{$type}-#{$css-string};
+background:      -o-#{$type}-#{$css-string};
+background:         #{$type}-#{$css-string-w3c};
+filter: progid:DXImageTransform.Microsoft.gradient(GradientType=#{$ie-gradient-type}, StartColorStr='#{ie-colors($colors)}', EndColorStr='#{ie-colors($colors, false)}');
+}
+
+//ex.2色を使った垂直方向のグラデーション
+// @include sgradient($colors:(
+// (#31B7D7, 0%),
+// (#EDAC7D, 100%)
+// ));
+
+//ex.3色を使った水平方向のグラデーション
+// @include sgradient( $from: left, $colors: (
+// (#E47D7D, 0%),
+// (#C195D3, 50%),
+// (#4FB4E8, 100%)
+// ));
+
+//ex.4色を使った斜め方向のグラデーション
+// @include sgradient( $from: top left, $colors: (
+// (#B58234, 0%),
+// (#D2B545, 50%),
+// (#D7C04D, 50.01%),
+// (#FFFFFF, 100%)
+// ));
+
+//ex.2色を使った放射状のグラデーション
+// @include sgradient( $type: radial, $colors: (
+// (#8ABB5D, 0%),
+// (#42736F, 100%)
+// ));
+
+//ex.3色を使った放射状のグラデーション
+// @include sgradient( $type: radial, $from: top right, $colors: (
+// (#C5492C, 0%),
+// (#EAA14E, 50%),
+// (#F0EB7F, 100%)
+// ));

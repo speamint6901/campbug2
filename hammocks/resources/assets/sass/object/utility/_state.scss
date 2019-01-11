@@ -1,0 +1,25 @@
+@charset "utf-8";
+/*
+ * object/utility/_state.scss
+ */
+
+
+.u-ObjectFitImg{
+ object-fit: cover;
+ //IE
+ font-family: 'object-fit: cover; object-position: bottom;'
+}
+
+
+.u-Block {
+ display: block;
+}
+.u-None {
+ display: none;
+}
+.u-Hidden {
+ visibility: hidden;
+}
+
+
+

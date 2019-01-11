@@ -1,8 +1,5 @@
-//******************************* impoprt setting /
-@import "compass";
-@import "../core/color";
-@import "../core/variables";
-@import "../core/mixin";
+@import "impoprt_setting";
+
 
 //******************************* impoprt partial /
 //@import "../partial/item_card";
@@ -142,7 +139,10 @@
 
    .tag_nav{
     i{float: left;}
-    ul{    float: left; width: Calc(100% - 27px);}
+    ul{
+     float: left;
+     width: calc(100% - 27px);
+    }
    }
   }//article-footer
  }//breakpoints (S) -------------------------

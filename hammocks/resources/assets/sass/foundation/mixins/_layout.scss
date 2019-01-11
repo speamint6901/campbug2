@@ -1,0 +1,102 @@
+//******************************* Liquid Size /
+@mixin liquidsize {
+ width:100%;
+ height:auto;
+ margin:0 auto;
+}
+
+//******************************* Layout /
+//==================== 天地の中央に配置
+@mixin vertical-align {
+ position: relative;
+ top: 50%;
+ -webkit-transform: translateY(-50%);
+ -ms-transform: translateY(-50%);
+ transform: translateY(-50%);
+}
+//ex. @include vertical-align();
+
+//side と contentsを揃える時になんか使って
+@mixin pittari_box{
+ padding-bottom: 32768px;
+ margin-bottom: -32768px;
+}
+
+
+@mixin windowfit($top_num: 10px, $bottom_num: 10px, $leftright_num: 100%) {
+ width: 100%;
+ float: left;
+ padding: $top_num $leftright_num $bottom_num $leftright_num;
+ margin:  0 (-$leftright_num);
+  box-sizing: initial;
+  }
+//ex.  @include windowfit(5%,20px,100%);
+
+
+@mixin flex_container{
+ display: -webkit-box;//* Android4.3以前ブラウザ用 */
+ display: -webkit-flex;//* iOS8以前Safari用 */
+ display: flex;
+
+ //* 以下、デフォルト指定 しないとこの値が使用  */
+ //flex-direction: row; //アイテムをどの方向に並べるか 水平・垂直
+ //flex-wrap: nowrap; //アイテムを1行or複数行にするか
+ //justify-content: flex-start; //directionに沿ったアイテムの水平の揃え方
+ //align-items: stretch; //directionに沿ったアイテムの垂直の揃え方
+ //align-content: stretch; //アイテムの行ごとの揃え方 複数行あり、親との間に隙間がある場合に有効
+}
+//ex. @include flex_container();
+
+
+@mixin flex_item($flex:none){
+ -webkit-box-flex: $flex;//* Android4.3以前ブラウザ用 */
+ -webkit-flex: $flex;//* iOS8以前Safari用 */
+ flex: $flex;
+
+ //* 以下、デフォルト 指定しないとこの値が使用 */
+ //order: 0; //アイテムの順番を指定する
+ //flex-grow: 0; //アイテムの伸びる倍率を指定する
+ //flex-shrink: 0; //アイテムの縮む倍率を指定する
+ //flex-basis: auto; //アイテムの幅・高さを指定する 幅か、高さかはdirectionによる
+ //align-self: auto; //コンテナのalign-itemsより優先する
+}
+//ex. @include flex_item();
+
+
+//Mobile時にメイン画像を幅いっぱいにする
+@mixin widtnMaxContents( ){
+ width: calc(100% + #{$contents-padding} + #{$contents-padding});
+ margin-left: - $contents-padding
+}
+//ex.@include widtnMaxContents();
+
+
+@mixin ArticleFeed_Size($article_num: 5,$article-max:200px,$s-article_num:2,$s-article-max:190px) {
+ width: calc(100vw / #{$article_num});
+ height: calc(100vw / #{$article_num});
+ max-width: $article-max;
+ max-height:$article-max;
+ @include mq(S,max) {
+  width: calc(100vw / #{$s-article_num});
+  height: calc(100vw / #{$s-article_num});
+  max-width: $s-article-max;
+  max-height:$s-article-max;
+ }
+}
+//ex.  @include ArticleFeed_Size(5,200px);
+
+
+@mixin ArticleFeed-rect_Size($article_num: 5,$article-max:200px,$article-hi:auto,$s-article_num:2,$s-article-max:190px,$s-article-hi:auto) {
+ width: calc(100vw / #{$article_num});
+ height: $article-hi;
+ max-width: $article-max;
+ image{}
+
+ @include mq(S,max) {
+  width: calc(100vw / #{$s-article_num});
+  height: $s-article-hi;
+  max-width: $s-article-max;
+  height: $s-article-hi;
+ }
+}
+//ex.  @include ArticleFeed_Size(5,200px);

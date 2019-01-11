@@ -1,13 +1,9 @@
-//******************************* impoprt setting /
-@import "compass";
-@import "../core/color";
-@import "../core/variables";
-@import "../core/mixin";
+@import "impoprt_setting";
 
 //******************************* impoprt partial /
 @import "../partial/tabmenu";
 
-@import "../vendor/creditcard/card";
+//@import "../vendor/creditcard/card";
 @import "../partial/form/pictselect";
 @import "../partial/form/flatpickr";
 @import "../partial/form/dropzone";

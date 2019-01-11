@@ -1,0 +1,93 @@
+
+$mq-breakpoints: (
+ 'XS': $BreakPoint-XS,
+ 'S' : $BreakPoint-S,
+ 'M' : $BreakPoint-M,
+ 'L' : $BreakPoint-L,
+ 'XL': $BreakPoint-XL,
+);
+
+@mixin mq($breakpoint: medium, $rule: min, $subtraction: false) {
+ $breakpoint: map_get($mq-breakpoints, $breakpoint);
+ @if $rule == max and $subtraction {
+  $breakpoint: $breakpoint - 1;
+ }
+ @media screen and (#{$rule}-width: $breakpoint) {
+  @content;
+}
+}
+
+
+//#### Usage ##################################
+/*****Case.01 min-width
+.elements {
+  @include mq {
+    color:red;
+  }
+  @include mq(L) {
+    color:red;
+  }
+}
+--------outpu↓--------
+
+@media screen and (min-width: 768px) {
+  .elements {
+    color:red;
+  }
+}
+@media screen and (min-width: 1024px) {
+ .elements {
+    color:red;
+ }
+}
+
+#############################################
+
+/*****Case.02 max-width
+.elements {
+  @include mq(S, max) {
+    color:red;
+  }
+  @include mq(L, max, true) {
+    color:red;
+  }
+}
+--------outpu↓--------
+
+@media screen and (max-width: 600px) {
+  .elements {
+    color:red;
+  }
+}
+@media screen and (max-width: 1024px) {
+ .elements {
+   color:red;
+ }
+}
+
+#############################################
+
+/*****Case.03 min and max
+.elements {
+  @include mq {
+    color:red;
+
+    @include mq(L, max, true) {
+      color:red;
+    }
+
+  }
+}
+--------outpu↓--------
+
+@media screen and (min-width: 768px) {
+  .elements {
+    color:red;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .elements {
+    color:red;
+  }
+}
+*/
